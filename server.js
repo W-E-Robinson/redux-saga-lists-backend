@@ -6,9 +6,11 @@ app.use(express.json());
 
 //NOTE: re add multiple lists so get works as expected
 const lists = [
-    {id: 1, value: "take out the rubbish", completed: false},
-    {id: 2, value: "take out the garbage", completed: false},
-    {id: 3, value: "walk the dog", completed: false},
+    [
+        {id: 1, value: "take out the rubbish", completed: false},
+        {id: 2, value: "take out the garbage", completed: false},
+        {id: 3, value: "walk the dog", completed: false},
+    ],
 ];
 
 const getList = async (id) => {
