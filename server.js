@@ -36,7 +36,11 @@ app.get("/lists/:id", (request, response) => {
     getList(id)
         .then(data => {
             console.log("GET /lists");
-            response.status(200).json({ message: "List successfully returned!", data: data });
+            if (data) {
+                response.status(200).json({ message: "List successfully returned!", data: data });
+            } else {
+                response.status(200).json({ message: "That list doesn't exist!", data: [] });
+            }
         })
         .catch(error => {
             console.error("Error", error);
