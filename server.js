@@ -1,8 +1,9 @@
-const cors = require("cors");
+const cors= require("cors");
 const express = require("express");
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 //NOTE: re add multiple lists so get works as expected
 const lists = [
@@ -32,6 +33,7 @@ const postList = async (id, value, completed) => {
 
 app.get("/lists/:id", (request, response) => {
     const id = request.params.id;
+    response.set('Access-Control-Allow-Origin', 'http://localhost:3000');
 
     getList(id)
         .then(data => {
