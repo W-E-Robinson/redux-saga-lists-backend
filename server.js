@@ -5,21 +5,18 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-//NOTE: re add multiple lists so get works as expected
-const lists = [
-    [
-        {id: 1, value: "take out the rubbish", completed: false},
-        {id: 2, value: "take out the garbage", completed: false},
-        {id: 3, value: "walk the dog", completed: false},
-    ],
+const list = [
+    {id: 1, value: "take out the rubbish", completed: false},
+    {id: 2, value: "take out the garbage", completed: false},
+    {id: 3, value: "walk the dog", completed: false},
 ];
 
-const getList = async (id) => {
-    return lists[id - 1];
+const getList = async () => {
+    return list;
 };
 
-const patchList = async (id, value, completed) => {
-    for (let i = 0; i < lists.length; i++) {
+const patchItem = async (id, value, completed) => {
+    for (let i = 0; i < list.length; i++) {
         if (i.id === id) {
             i.value = value;
             i.completed = completed;
@@ -27,17 +24,20 @@ const patchList = async (id, value, completed) => {
     }
 };
 
-const postList = async (id, value, completed) => {
+const postItem = async (id, value, completed) => {
     return null;
-}
+};
 
-app.get("/lists/:id", (request, response) => {
-    const id = request.params.id;
+const deleteItem = async (id) => {
+    return null;
+};
+
+app.get("/list", (request, response) => {
     response.set('Access-Control-Allow-Origin', 'http://localhost:3000');
 
-    getList(id)
+    getList()
         .then(data => {
-            console.log("GET /lists");
+            console.log("GET /list");
             if (data) {
                 response.status(200).json({ message: "List successfully returned!", data: data });
             } else {
@@ -50,14 +50,14 @@ app.get("/lists/:id", (request, response) => {
         });
 });
 
-app.patch("/lists", (request, response) => {
+app.patch("/list", (request, response) => {
     const id = request.body.id;
     const value = requst.body.value;
     const completed = request.body.value;
 
-    patchList(id)
+    patchItem(id)
         .then(data => {
-            console.log("PATCH /lists");
+            console.log("PATCH /list");
             response.status(200).json({ message: "List successfully patched!", data: data });
         })
         .catch(error => {
@@ -66,14 +66,14 @@ app.patch("/lists", (request, response) => {
         });
 });
 
-app.post("/lists", (request, response) => {
+app.post("/list", (request, response) => {
     const id = request.body.id;
     const value = requst.body.value;
     const completed = request.body.value;
 
-    postList(id)
+    postItem(id)
         .then(data => {
-            console.log("POST /lists");
+            console.log("POST /list");
             response.status(201).json({ message: "List successfully posted!", data: data });
         })
         .catch(error => {
