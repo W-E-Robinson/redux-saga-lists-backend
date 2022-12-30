@@ -17,6 +17,7 @@ const getList = async () => {
 
 const completeItem = async (id) => {
     list[id].completed = true;
+    return list;
 };
 
 const postItem = async (value) => {
@@ -25,11 +26,15 @@ const postItem = async (value) => {
         value: value,
         completed: false,
     });
+    return list;
 };
 
 const deleteItem = async (id) => {
     filteredList = list.filter(item => item.id !== id);
     list = filteredList;
+    console.log(list);
+    console.log(filteredList);
+    return list;
 };
 
 app.get("/list", (request, response) => {
@@ -84,7 +89,7 @@ app.delete("/list", (request, response) => {
     response.set('Access-Control-Allow-Origin', 'http://localhost:3000');
     const id = request.body.id;
 
-    postItem(id)
+    deleteItem(id)
         .then(data => {
             console.log("DELETE /list");
             response.status(201).json({ message: "Item successfully deleted!", data: data });
