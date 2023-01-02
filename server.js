@@ -33,7 +33,6 @@ const deleteItem = async (id) => {
     filteredList = list.filter(item => item.id !== id);
     list = filteredList;
     console.log(list);
-    console.log(filteredList);
     return list;
 };
 
