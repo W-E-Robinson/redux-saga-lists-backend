@@ -12,7 +12,6 @@ const list = [
 ];
 
 const getList = async () => {
-    console.log(list);
     return list;
 };
 
