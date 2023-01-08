@@ -15,8 +15,8 @@ const getList = async () => {
     return list;
 };
 
-const completeItem = async (id) => {
-    list[id].completed = true;
+const toggleItemCompletion = async (id) => {
+    list[id].completed = !list[id].completed;
     return list;
 };
 
@@ -57,7 +57,7 @@ app.patch("/list/:id", (request, response) => {
     response.set('Access-Control-Allow-Origin', 'http://localhost:3000');
     const id = request.params.id;
 
-    completeItem(id)
+    toggleItemCompletion(id)
         .then(data => {
             console.log("PATCH /list");
             response.status(201).json({ message: "Item successfully patched!", data: data });
