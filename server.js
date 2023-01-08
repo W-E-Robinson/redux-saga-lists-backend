@@ -6,9 +6,9 @@ app.use(express.json());
 app.use(cors());
 
 const list = [
-    {id: 0, value: "take out the rubbish", completed: false},
-    {id: 1, value: "take out the garbage", completed: false},
-    {id: 2, value: "walk the dog", completed: false},
+    {id: Math.floor(Math.random() * 100000), value: "take out the rubbish", completed: false},
+    {id: Math.floor(Math.random() * 100000), value: "take out the garbage", completed: false},
+    {id: Math.floor(Math.random() * 100000), value: "walk the dog", completed: false},
 ];
 
 const getList = async () => {
@@ -22,7 +22,7 @@ const toggleItemCompletion = async (id) => {
 
 const postItem = async (value) => {
     list.push({
-        id: Math.floor(Math.random() * 1000),
+        id: Math.floor(Math.random() * 100000),
         value: value,
         completed: false,
     });
@@ -72,10 +72,10 @@ app.post("/list", (request, response) => {
     response.set('Access-Control-Allow-Origin', 'http://localhost:3000');
     const value = request.body.value;
 
-   if (!request.body.value) {
-       response.status(400).send("Error: 'value' not present in body");
-       return;
-   };
+    if (!request.body.value) {
+        response.status(400).send("Error: 'value' not present in body");
+        return;
+    };
 
     postItem(value)
         .then(data => {
@@ -88,7 +88,7 @@ app.post("/list", (request, response) => {
         });
 });
 
-app.delete("/list", (request, response) => {
+app.delete("/list/:id", (request, response) => {
     response.set('Access-Control-Allow-Origin', 'http://localhost:3000');
     const id = request.body.id;
 
