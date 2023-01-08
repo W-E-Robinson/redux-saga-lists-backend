@@ -12,11 +12,13 @@ const list = [
 ];
 
 const getList = async () => {
+    console.log(list);
     return list;
 };
 
 const toggleItemCompletion = async (id) => {
-    list[id].completed = !list[id].completed;
+    const patchItemIndex = list.indexOf(list.find(item => item.id === +id));
+    list[patchItemIndex].completed = !list[patchItemIndex].completed;
     return list;
 };
 
