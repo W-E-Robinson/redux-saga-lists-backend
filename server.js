@@ -5,7 +5,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-let list = [
+const list = [
     {id: 0, value: "take out the rubbish", completed: false},
     {id: 1, value: "take out the garbage", completed: false},
     {id: 2, value: "walk the dog", completed: false},
@@ -54,9 +54,9 @@ app.get("/list", (request, response) => {
         });
 });
 
-app.patch("/list", (request, response) => {
+app.patch("/list/:id", (request, response) => {
     response.set('Access-Control-Allow-Origin', 'http://localhost:3000');
-    const id = request.body.id;
+    const id = request.params.id;
 
     completeItem(id)
         .then(data => {
