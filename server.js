@@ -5,31 +5,35 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-let list = [
-    {id: 0, value: "take out the rubbish", completed: false},
-    {id: 1, value: "take out the garbage", completed: false},
-    {id: 2, value: "walk the dog", completed: false},
+const list = [
+    {id: Math.floor(Math.random() * 100000), value: "take out the rubbish", completed: false},
+    {id: Math.floor(Math.random() * 100000), value: "take out the garbage", completed: false},
+    {id: Math.floor(Math.random() * 100000), value: "walk the dog", completed: false},
 ];
 
 const getList = async () => {
     return list;
 };
 
-const completeItem = async (id) => {
-    list[id].completed = true;
+const toggleItemCompletion = async (id) => {
+    list[id].completed = !list[id].completed;
+    return list;
 };
 
 const postItem = async (value) => {
     list.push({
-        id: Math.floor(Math.random() * 1000),
+        id: Math.floor(Math.random() * 100000),
         value: value,
         completed: false,
     });
+    return list;
 };
 
 const deleteItem = async (id) => {
-    filteredList = list.filter(item => item.id !== id);
-    list = filteredList;
+    const deleteItemIndex = list.indexOf(list.find(item => item.id === id));
+    if (deleteItemIndex === -1) throw new Error("Item is not in the list");
+    list.splice(deleteItemIndex, 1);
+    return list;
 };
 
 app.get("/list", (request, response) => {
@@ -50,11 +54,11 @@ app.get("/list", (request, response) => {
         });
 });
 
-app.patch("/list", (request, response) => {
+app.patch("/list/:id", (request, response) => {
     response.set('Access-Control-Allow-Origin', 'http://localhost:3000');
-    const id = request.body.id;
+    const id = request.params.id;
 
-    completeItem(id)
+    toggleItemCompletion(id)
         .then(data => {
             console.log("PATCH /list");
             response.status(201).json({ message: "Item successfully patched!", data: data });
@@ -68,6 +72,11 @@ app.patch("/list", (request, response) => {
 app.post("/list", (request, response) => {
     response.set('Access-Control-Allow-Origin', 'http://localhost:3000');
     const value = request.body.value;
+
+    if (!request.body.value) {
+        response.status(400).send("Error: 'value' not present in body");
+        return;
+    };
 
     postItem(value)
         .then(data => {
@@ -84,7 +93,7 @@ app.delete("/list", (request, response) => {
     response.set('Access-Control-Allow-Origin', 'http://localhost:3000');
     const id = request.body.id;
 
-    postItem(id)
+    deleteItem(id)
         .then(data => {
             console.log("DELETE /list");
             response.status(201).json({ message: "Item successfully deleted!", data: data });
