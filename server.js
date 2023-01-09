@@ -51,7 +51,7 @@ app.get("/list", (request, response) => {
         })
         .catch(error => {
             console.error("Error", error);
-            response.status(500).send("500 Internal Server Error!");
+            response.status(500).json({ message: "500 Internal Server Error!" });
         });
 });
 
@@ -66,7 +66,7 @@ app.patch("/list/:id", (request, response) => {
         })
         .catch(error => {
             console.error("Error", error);
-            response.status(500).send("500 Internal Server Error!");
+            response.status(500).json({ message: "500 Internal Server Error!" });
         });
 });
 
@@ -75,7 +75,7 @@ app.post("/list", (request, response) => {
     const value = request.body.value;
 
     if (!request.body.value) {
-        response.status(400).send("Error: 'value' not present in body");
+        response.status(400).json({ message: "Error: 'value' not present in body" });
         return;
     };
 
@@ -86,7 +86,7 @@ app.post("/list", (request, response) => {
         })
         .catch(error => {
             console.error("Error", error);
-            response.status(500).send("500 Internal Server Error!");
+            response.status(500).json({ message: "500 Internal Server Error!" });
         });
 });
 
@@ -101,7 +101,7 @@ app.delete("/list", (request, response) => {
         })
         .catch(error => {
             console.error("Error", error);
-            response.status(500).send("500 Internal Server Error!");
+            response.status(500).json({ message: "500 Internal Server Error!" });
         });
 });
 
