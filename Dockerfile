@@ -1,11 +1,5 @@
 FROM alpine
 
-#ENV PGUSER=postgres
-
-#ENV PGHOST=localhost
-
-#ENV PGPASSWORD=mysecretpassword
-
 RUN apk add --update nodejs npm
 
 WORKDIR /app
