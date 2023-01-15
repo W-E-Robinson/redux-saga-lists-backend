@@ -31,7 +31,7 @@ const postItem = async (value) => {
 };
 
 const deleteItem = async (id) => {
-    const deleteItemIndex = list.indexOf(list.find(item => item.id === id));
+    const deleteItemIndex = list.indexOf(list.find(item => item.id === +id));
     if (deleteItemIndex === -1) throw new Error("Item is not in the list");
     list.splice(deleteItemIndex, 1);
     return list;
@@ -90,9 +90,9 @@ app.post("/list", (request, response) => {
         });
 });
 
-app.delete("/list", (request, response) => {
+app.delete("/list/:id", (request, response) => {
     response.set('Access-Control-Allow-Origin', 'http://localhost:3000');
-    const id = request.body.id;
+    const id = request.params.id;
 
     deleteItem(id)
         .then(data => {
