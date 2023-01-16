@@ -46,7 +46,7 @@ app.get("/list", (request, response) => {
             if (data) {
                 response.status(200).json({ message: "List successfully returned!", data: data });
             } else {
-                response.status(500).json({ message: "That list doesn't exist!", data: [] });
+                response.status(400).json({ message: "That list doesn't exist!", data: [] });
             }
         })
         .catch(error => {
