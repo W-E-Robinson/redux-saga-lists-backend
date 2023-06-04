@@ -7,22 +7,22 @@ Backend simple Node.js for redux-lists, see [redux-lists-docker](https://github.
 #### Get list
 
 ```http
-  GET /list
+GET /list
 ```
 #### Patch item
 
 ```http
-  PATCH /list/:id
+PATCH /list/:id
 ```
 #### Post new item
 
 ```http
-  POST /list
+POST /list
 ```
 
 #### Delete item
 
 ```http
-  GET /list/:id
+GET /list/:id
 ```
 
